@@ -5,6 +5,15 @@
 
 	export let items: any[] = [];
 	export let loaded: boolean = false;
+
+	async function deletePost(id: number) {
+		const res = await fetch(`https://api.fake-rest.refine.dev/posts/${id}`, {
+			method: 'DELETE'
+		}).then((res) => {
+			res.json();
+			location.reload();
+		});
+	}
 </script>
 
 <DataTable table$aria-label="User list" style="width: 100%;">
@@ -26,7 +35,7 @@
 				<Cell>{item.createdAt}</Cell>
 				<Cell>
 					<a href={`/post/${item.id}`}>Edit</a>
-					<Button>Delete</Button>
+					<Button on:click={() => deletePost(item.id)}>Delete</Button>
 				</Cell>
 			</Row>
 		{/each}
